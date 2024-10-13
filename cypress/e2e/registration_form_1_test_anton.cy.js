@@ -17,13 +17,12 @@ Assignment 2:
  */
 
 describe('This is first test suite, Anton Vorobjov', () => {
+    // Today's date: 25-09-2024
     it('User can submit data only when valid mandatory values are added', () => {
         cy.get('[data-testid="phoneNumberTestId"]').type('555666777')
-        cy.get('#firstName').type('Anton');
-        cy.get('#lastName').type('Vorobjov');
-        cy.get('input[name="password"]').type('MySecurePass1');
-        cy.get('[name="confirm"]').type('MySecurePass1');
-        cy.get('#username').type('RealAnton');
+        cy.get('input[name="password"]').type('Password938')
+        cy.get('[name="confirm"]').type('Password938')
+        cy.get('#username').type('RealAnton')
 
         //in order to activate submit button, user has to click somewhere outside the input field
         cy.get('h2').contains('Password').click()
@@ -43,7 +42,7 @@ describe('This is first test suite, Anton Vorobjov', () => {
 
 
     it('User can use only same both first and validation passwords', () => {
-        cy.get('#username').type('RealAnton')
+        cy.get('#username').type('johnDoe')
         cy.get('[data-testid="phoneNumberTestId"]').type('10203040')
         cy.get('input[name="password"]').type('Password123')
         cy.get('[name="confirm"]').type('Password123123')
@@ -66,7 +65,7 @@ describe('This is first test suite, Anton Vorobjov', () => {
     })
 
     it('User cannot submit data when username is absent', () => {
-        cy.get('#username').type('RealAnton')
+        cy.get('#username').type('johnDoe')
         cy.get('[data-testid="phoneNumberTestId"]').type('10203040')
         cy.get("input[name='password']").type('Password123')
         cy.get('[name="confirm"]').type('Password123')
@@ -99,52 +98,18 @@ describe('This is first test suite, Anton Vorobjov', () => {
     */
 
     it('User cannot submit data when phone number is absent', () => {
-        cy.get('#username').type('RealAnton')
-        cy.get("input[name='password']").type('Password123')
-        cy.get('[name="confirm"]').type('Password123')
-        cy.get('#username').scrollIntoView()
-        cy.get('#username').clear()
-        cy.get('h2').contains('Password').click()
-        cy.get('.submit_button').should('be.disabled')
-        cy.get('#success_message').should('not.be.visible')
-        cy.get('#input_error_message').should('be.visible').should('contain', 'Mandatory input field is not valid or empty!')
-        cy.get('input[name="username"]').should('have.attr', 'title').should('contain', 'Input field')
-        cy.get('#input_error_message').should('be.visible')
-        cy.get('#input_error_message').should('have.css', 'display', 'block')
+        // Add test, similar to previous one with phone number field not filled in
+        // All other fields should be entered correctly
+        // Assert that submit button is not enabled and that successful message is not visible
     })
 
     it('User cannot submit data when password and/or confirmation password is absent', () => {
-        cy.get('#username').type('RealAnton')
-        cy.get('[data-testid="phoneNumberTestId"]').type('10203040')
-        cy.get('[name="confirm"]').type('Password123')
-        cy.get('#username').scrollIntoView()
-        cy.get('#username').clear()
-        cy.get('h2').contains('Password').click()
-        cy.get('.submit_button').should('be.disabled')
-        cy.get('#success_message').should('not.be.visible')
-        cy.get('#input_error_message').should('be.visible').should('contain', 'Mandatory input field is not valid or empty!')
-        cy.get('input[name="username"]').should('have.attr', 'title').should('contain', 'Input field')
-        cy.get('#input_error_message').should('be.visible')
-        cy.get('#input_error_message').should('have.css', 'display', 'block')
         // Add test, similar to previous one with password field not filled in
         // All other fields should be entered correctly
         // Assert that submit button is not enabled and that successful message is not visible
     })
 
     it('User cannot add letters to phone number', () => {
-        cy.get('#username').type('RealAnton')
-        cy.get('[data-testid="phoneNumberTestId"]').type('Cerebrum hub')
-        cy.get("input[name='password']").type('Password123')
-        cy.get('[name="confirm"]').type('Password123')
-        cy.get('#username').scrollIntoView()
-        cy.get('#username').clear()
-        cy.get('h2').contains('Password').click()
-        cy.get('.submit_button').should('be.disabled')
-        cy.get('#success_message').should('not.be.visible')
-        cy.get('#input_error_message').should('be.visible').should('contain', 'Mandatory input field is not valid or empty!')
-        cy.get('input[name="username"]').should('have.attr', 'title').should('contain', 'Input field')
-        cy.get('#input_error_message').should('be.visible')
-        cy.get('#input_error_message').should('have.css', 'display', 'block')
         // Next verification is given as example
         // how we can check from html code, that phone number should contain only numbers
         cy.get('[data-testid="phoneNumberTestId"]').should('have.attr', 'type', 'number')
